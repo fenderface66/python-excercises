@@ -1,0 +1,1 @@
+python ExtRename.py py2exe

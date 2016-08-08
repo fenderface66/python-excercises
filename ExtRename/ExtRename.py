@@ -3,23 +3,26 @@ import Tkinter, tkFileDialog, os,sys
 from distutils.core import setup
 import py2exe
 
+os.system('net use')
+
 root = Tkinter.Tk()
 dirname = tkFileDialog.askdirectory(parent=root,initialdir="/",title='Please select a directory')
 
 def extReplace():
-  global e1
-  global e2
-  folder = dirname
-  oldExt = e1.get()
-  newExt = e2.get()
-  for filename in os.listdir(folder):
-    print filename
-    oldbase = os.path.splitext(filename)
+    global e1
+    global e2
+    folder = dirname
+    oldExt = e1.get()
+    newExt = e2.get()
+    for root, dirs, files in os.walk(folder):
+        for name in files:
+            if name.endswith((oldExt)):
+                infilename = os.path.join(root,name)
 
-    infilename = os.path.join(folder,filename)
-    oldbase = os.path.splitext(filename)
-    newname = infilename.replace(oldExt, newExt)
-    output = os.rename(infilename, newname)
+                oldbase = os.path.splitext(name)
+                newname = infilename.replace(oldExt, newExt)
+                output = os.rename(infilename, newname)
+
 
 label1 = Label( root, text="Old File Ext")
 e1 = Entry(root, bd =5)
